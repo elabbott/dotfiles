@@ -135,6 +135,15 @@ Changes to files in the repository automatically apply to linked locations.
 - **linux/yum-packages.txt** — RHEL/CentOS packages
 - **codespaces/devcontainer.json** — Codespaces configuration
 - **codespaces/init.sh** — Codespaces initialization script
+- **.editorconfig** — Coding style rules for all languages
+- **editor/PYTHON_STYLE.md** — Python conventions and best practices
+- **editor/JAVASCRIPT_STYLE.md** — JavaScript conventions and best practices
+- **editor/TYPESCRIPT_STYLE.md** — TypeScript conventions and best practices
+- **editor/CSHARP_STYLE.md** — C# conventions and best practices
+- **editor/vim/.vimrc** — Vim configuration
+- **editor/nvim/** — Neovim configuration (init.vim and init.lua)
+- **editor/vscode/settings.json** — VSCode editor settings
+- **editor/vscode/keybindings.json** — VSCode keyboard shortcuts
 
 ## Updating
 

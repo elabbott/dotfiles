@@ -65,6 +65,42 @@ Full VSCode configuration including:
 
 **Setup:** See [vscode/README.md](vscode/README.md)
 
+## Language Style Guides
+
+Comprehensive coding conventions for each language with examples, best practices, and tooling recommendations.
+
+### [PYTHON_STYLE.md](PYTHON_STYLE.md)
+Python coding standards following PEP 8 and Black formatter:
+- Type hints and docstrings
+- Naming conventions
+- Import organization
+- Context managers and comprehensions
+- Tools: Black, isort, ruff, mypy
+
+### [JAVASCRIPT_STYLE.md](JAVASCRIPT_STYLE.md)
+JavaScript conventions following ESLint and Prettier:
+- Modern ES6+ features (arrow functions, destructuring, async/await)
+- Naming conventions
+- Class and function definitions
+- Error handling
+- Tools: ESLint, Prettier
+
+### [TYPESCRIPT_STYLE.md](TYPESCRIPT_STYLE.md)
+TypeScript best practices with strict type safety:
+- Type annotations and interfaces
+- Generics and utility types
+- Strict mode configuration
+- Decorators and enums
+- Tools: TypeScript compiler, ESLint, Prettier
+
+### [CSHARP_STYLE.md](CSHARP_STYLE.md)
+C# modern conventions including latest language features:
+- Primary constructors (C# 12)
+- Switch expressions (C# 8+)
+- Pattern matching
+- Naming conventions
+- Tools: .editorconfig, StyleCop, dotnet format
+
 ## Quick Start
 
 ```bash
