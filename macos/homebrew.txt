@@ -1,0 +1,25 @@
+# Homebrew packages for macOS
+# One package per line, comments start with #
+
+# Essential development tools
+git
+curl
+wget
+openssh
+tmux
+
+# Shells
+zsh
+bash
+
+# Version managers
+nvm
+pyenv
+rbenv
+
+# Popular CLIs
+gh
+jq
+yq
+
+# Add more as needed

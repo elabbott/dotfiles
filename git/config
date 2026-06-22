@@ -1,0 +1,31 @@
+# Git configuration
+# Copy this to ~/.config/git/config or symlink it
+
+[user]
+    # Configure with your own details
+    name = Eric Abbott
+    email = dev@eric.express
+
+[core]
+    editor = vim
+    excludesFile = ~/.gitignore_global
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = log --graph --oneline --all
+
+[color]
+    ui = auto
+
+[init]
+    defaultBranch = main
+
+[push]
+    default = current
+
+# Add more configuration as needed

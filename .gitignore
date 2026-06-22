@@ -1,0 +1,31 @@
+# Backups from installation
+.backups/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor backups
+*~
+*.swp
+*.swo
+
+# Private/sensitive files (add your own as needed)
+# .ssh/
+# .gnupg/
+# credentials
+
+# Node modules and package managers
+node_modules/
+.npm
+.yarn
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local overrides (not tracked)
+local.sh
+*.local

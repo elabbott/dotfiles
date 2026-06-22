@@ -1,0 +1,21 @@
+# RHEL/CentOS packages
+# One package per line, comments start with #
+
+git
+curl
+wget
+openssh-clients
+tmux
+
+# Shells
+zsh
+bash
+
+# Development tools
+gcc
+make
+python3-pip
+nodejs
+npm
+
+# Add more as needed

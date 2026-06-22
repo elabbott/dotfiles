@@ -1,0 +1,25 @@
+# Global gitignore
+# Copy to ~/.gitignore_global
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+**.lscache
+
+# Language/Framework specific
+node_modules/
+.venv/
+__pycache__/
+
+# Local files (should be in .git/info/exclude instead)
+*.local
+local.*
+
+# Add more patterns as needed

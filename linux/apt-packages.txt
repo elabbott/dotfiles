@@ -1,0 +1,20 @@
+# Debian/Ubuntu packages
+# One package per line, comments start with #
+
+build-essential
+git
+curl
+wget
+openssh-client
+tmux
+
+# Shells
+zsh
+bash
+
+# Development tools
+python3-pip
+nodejs
+npm
+
+# Add more as needed
