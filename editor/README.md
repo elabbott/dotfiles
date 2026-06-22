@@ -1,6 +1,37 @@
 # Editor Configuration
 
-Configuration files for various editors.
+Configuration files for various editors and coding style standards.
+
+## EditorConfig
+
+The `.editorconfig` file at the repository root defines consistent coding styles across all editors and IDEs.
+
+**Supported formats:**
+- **JavaScript/TypeScript** — 2 spaces, 120 char line length
+- **Python** — 4 spaces, 88 char line length (PEP 8 / Black)
+- **.NET/C#** — 4 spaces, 120 char line length, modern C# features
+- **JSON/YAML** — 2 spaces
+- **Go** — Tabs (1 indent)
+- **Rust** — 4 spaces, 100 char line length
+- Plus: Shell, Docker, XML, HTML, CSS, and more
+
+**Installation:** Most modern editors support EditorConfig out of the box (VSCode, JetBrains IDEs, Vim). No additional setup needed—the `.editorconfig` file is automatically detected.
+
+**Reference:** https://editorconfig.org
+
+## C# / .NET Style Guide
+
+Comprehensive C# coding conventions including modern language features.
+
+**See [CSHARP_STYLE.md](CSHARP_STYLE.md) for:**
+- Primary constructors (C# 12)
+- Switch expressions (C# 8+)
+- File-scoped namespaces (C# 10)
+- Pattern matching best practices
+- Braces in control structures
+- Expression-bodied members
+- Naming conventions
+- Formatting rules
 
 ## Subdirectories
 

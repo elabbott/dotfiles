@@ -1,0 +1,200 @@
+# EditorConfig helps maintain consistent coding styles across different editors and IDEs
+# https://editorconfig.org
+
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+
+# JavaScript / TypeScript / Node.js
+[*.{js,jsx,ts,tsx,mjs,cjs}]
+indent_size = 2
+max_line_length = 120
+
+# TypeScript specific
+[*.ts]
+indent_size = 2
+
+[*.tsx]
+indent_size = 2
+
+# JSON
+[*.json]
+indent_size = 2
+max_line_length = 120
+
+# YAML
+[*.{yml,yaml}]
+indent_size = 2
+max_line_length = 120
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Python
+[*.py]
+indent_size = 4
+max_line_length = 88
+# PEP 8 style guide
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Python type stubs
+[*.pyi]
+indent_size = 4
+
+# .NET / C#
+[*.cs]
+indent_size = 4
+max_line_length = 120
+end_of_line = crlf
+
+# C# Code Style Rules
+# Whitespace preferences
+csharp_space_after_cast = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+
+# New line preferences
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+
+# Indentation preferences
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_indent_labels = no_change
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents_when_block = false
+
+# Wrapping preferences
+csharp_preserve_single_line_statements = false
+csharp_preserve_single_line_blocks = true
+
+# Code block preferences
+csharp_prefer_braces = true:silent
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_prefer_simple_default_expression = true:suggestion
+
+# Expression preferences
+csharp_prefer_static_local_function = true:suggestion
+csharp_prefer_inferred_tuple_names = true:suggestion
+csharp_prefer_inferred_anonymous_type_member_names = true:suggestion
+csharp_prefer_pattern_matching = true:silent
+csharp_prefer_pattern_matching_over_is_with_cast_check = true:suggestion
+csharp_prefer_pattern_matching_over_as_with_null_check = true:suggestion
+
+# Null-checking preferences
+csharp_style_conditional_delegate_call = true:suggestion
+
+# var preferences
+csharp_style_var_for_built_in_types = false:silent
+csharp_style_var_when_type_is_apparent = false:suggestion
+csharp_style_var_elsewhere = false:silent
+
+# Expression-bodied members
+csharp_style_expression_bodied_methods = true:silent
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = true:silent
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_indexers = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+
+# Modern C# features
+# Primary constructors (C# 12)
+csharp_style_primary_constructors = true:suggestion
+
+# Switch expressions (C# 8)
+csharp_style_switch_expression = true:suggestion
+
+# File-scoped namespaces (C# 10)
+csharp_style_file_scoped_namespaces = true:suggestion
+
+# Required members (C# 11)
+csharp_style_require_primary_constructors_parameter_validation = true:silent
+
+# Inline array (C# 12)
+csharp_style_prefer_inline_array = true:suggestion
+
+# Tuple coalescing (C# 10+)
+csharp_style_deconstructed_variable_declaration = true:suggestion
+
+# Collection initializers
+csharp_style_prefer_collection_initializers = true:suggestion
+
+# Throw expressions
+csharp_style_throw_expression = true:suggestion
+
+# MSBuild project files
+[*.{csproj,vbproj,proj,projitems,shproj}]
+indent_size = 2
+end_of_line = crlf
+
+# C# test files
+[*Tests.cs]
+indent_size = 4
+
+# C++/C
+[*.{cpp,c,h,hpp,cc,cxx}]
+indent_size = 4
+max_line_length = 120
+
+# Java
+[*.java]
+indent_size = 4
+max_line_length = 120
+
+# Go
+[*.go]
+indent_style = tab
+indent_size = 1
+
+# Rust
+[*.rs]
+indent_size = 4
+max_line_length = 100
+
+# Shell scripts
+[*.{sh,bash,zsh}]
+indent_size = 2
+max_line_length = 120
+
+# Docker
+[Dockerfile]
+indent_size = 2
+
+# Configuration files
+[*.{ini,cfg,conf}]
+indent_size = 2
+
+# XML
+[*.{xml,csproj,vbproj,proj}]
+indent_size = 2
+end_of_line = crlf
+
+# HTML
+[*.{html,htm,vue}]
+indent_size = 2
+max_line_length = 120
+
+# CSS / SCSS / LESS
+[*.{css,scss,less}]
+indent_size = 2
+max_line_length = 120
+
+# EditorConfig
+[.editorconfig]
+indent_size = 2
