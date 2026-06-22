@@ -1,5 +1,16 @@
 # EditorConfig helps maintain consistent coding styles across different editors and IDEs
 # https://editorconfig.org
+#
+# This file handles basic formatting rules (indentation, line endings, trailing whitespace).
+# For advanced language-specific rules, see tool-specific configuration files:
+#
+# - Python: editor/python/pyproject.toml (Black, isort, ruff, mypy)
+# - JavaScript: editor/javascript/.eslintrc.json and .prettierrc (ESLint, Prettier)
+# - TypeScript: editor/typescript/ (ESLint, Prettier, tsconfig.json)
+# - C#: .editorconfig rules below (Roslyn analyzers)
+#
+# Most modern editors support EditorConfig out of the box.
+# Tool configurations provide detailed rules, type checking, and linting.
 
 root = true
 
@@ -12,16 +23,25 @@ trim_trailing_whitespace = true
 indent_style = space
 
 # JavaScript / TypeScript / Node.js
-[*.{js,jsx,ts,tsx,mjs,cjs}]
+# See editor/javascript/.eslintrc.json and editor/javascript/.prettierrc for detailed rules
+[*.{js,jsx,mjs,cjs}]
 indent_size = 2
 max_line_length = 120
+# Formatting enforced by Prettier
+# Linting enforced by ESLint
 
-# TypeScript specific
+# TypeScript
+# See editor/typescript/.eslintrc.json, editor/typescript/.prettierrc, and editor/typescript/tsconfig.json
 [*.ts]
 indent_size = 2
+max_line_length = 120
+# Type checking enforced by TypeScript compiler (strict mode)
+# Linting enforced by ESLint with TypeScript plugin
+# Formatting enforced by Prettier
 
 [*.tsx]
 indent_size = 2
+max_line_length = 120
 
 # JSON
 [*.json]
@@ -39,10 +59,14 @@ trim_trailing_whitespace = false
 max_line_length = off
 
 # Python
+# See editor/python/pyproject.toml for detailed tool configuration
 [*.py]
 indent_size = 4
 max_line_length = 88
-# PEP 8 style guide
+# Formatting enforced by Black (line length: 88)
+# Import sorting by isort (Black profile)
+# Linting by ruff (includes flake8, pyupgrade, etc.)
+# Type checking by mypy (strict mode)
 insert_final_newline = true
 trim_trailing_whitespace = true
 
@@ -194,6 +218,25 @@ max_line_length = 120
 [*.{css,scss,less}]
 indent_size = 2
 max_line_length = 120
+
+# Tool Configuration Files
+# Python
+[pyproject.toml]
+indent_size = 2
+
+[{.flake8,.pylintrc}]
+indent_size = 2
+
+# JavaScript / TypeScript
+[{.eslintrc.json,.eslintrc,.prettierrc,.prettierignore}]
+indent_size = 2
+
+[tsconfig.json]
+indent_size = 2
+
+# .NET / C#
+[{.editorconfig,Directory.Build.props}]
+indent_size = 2
 
 # EditorConfig
 [.editorconfig]
