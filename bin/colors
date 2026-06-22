@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# colors: Display terminal color palette
+# Usage: colors
+
+echo "Standard Colors (0-7):"
+echo ""
+for color in {0..7}; do
+    echo -ne "\033[${color}m  \033[0m"
+done
+echo ""
+echo ""
+
+echo "Bright Colors (8-15):"
+echo ""
+for color in {8..15}; do
+    color_code=$((color - 8))
+    echo -ne "\033[1;${color_code}m  \033[0m"
+done
+echo ""
+echo ""
+
+echo "256 Color Palette (16-255):"
+echo ""
+
+# Standard colors and grey scale
+for i in {16..231}; do
+    if (((i - 16) % 36 == 0)); then
+        echo ""
+    fi
+    printf "\033[38;5;${i}m█\033[0m"
+done
+
+# Grey scale
+echo ""
+echo ""
+for i in {232..255}; do
+    printf "\033[38;5;${i}m█\033[0m"
+done
+echo ""
+echo ""
+
+# Show usage
+echo "Usage in scripts:"
+echo "  RED='\033[0;31m'"
+echo "  GREEN='\033[0;32m'"
+echo "  YELLOW='\033[1;33m'"
+echo "  BLUE='\033[0;34m'"
+echo "  NC='\033[0m'  # No Color"
+echo ""
+echo "  echo -e \"\${RED}Error\${NC}\""

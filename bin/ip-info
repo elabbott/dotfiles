@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# ip-info: Display IP address information
+# Usage: ip-info [--local|--public|--all]
+
+set -e
+
+LOCAL=false
+PUBLIC=false
+ALL=false
+
+# Parse arguments
+if [[ $# -eq 0 ]]; then
+    ALL=true
+else
+    case $1 in
+        --local)
+            LOCAL=true
+            ;;
+        --public)
+            PUBLIC=true
+            ;;
+        --all)
+            ALL=true
+            ;;
+    esac
+fi
+
+if [ "$LOCAL" = true ] || [ "$ALL" = true ]; then
+    echo "Local IP Addresses:"
+    echo "===================="
+    if command -v ifconfig &> /dev/null; then
+        # macOS
+        ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | sort | uniq
+    elif command -v ip &> /dev/null; then
+        # Linux
+        ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v 127.0.0.1 | sort | uniq
+    fi
+fi
+
+if [ "$PUBLIC" = true ] || [ "$ALL" = true ]; then
+    echo ""
+    echo "Public IP Address:"
+    echo "===================="
+    
+    # Try multiple public IP providers for reliability
+    if command -v curl &> /dev/null; then
+        curl -s https://api.ipify.org?format=json | grep -o '"ip":"[^"]*"' | cut -d'"' -f4
+    elif command -v wget &> /dev/null; then
+        wget -qO - https://api.ipify.org?format=json | grep -o '"ip":"[^"]*"' | cut -d'"' -f4
+    else
+        echo "curl or wget required for public IP lookup"
+    fi
+fi
+
+if [ "$ALL" = true ]; then
+    echo ""
+    echo "Network Interfaces:"
+    echo "===================="
+    if command -v ifconfig &> /dev/null; then
+        # macOS
+        ifconfig | grep "^[a-z]" | awk '{print $1}'
+    elif command -v ip &> /dev/null; then
+        # Linux
+        ip link show | grep "^[0-9]" | awk '{print $2}' | sed 's/:$//'
+    fi
+fi

@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# git-cleanup: Remove merged and stale local branches
+# Usage: git-cleanup [--force] [--days 14]
+
+set -e
+
+DAYS=${DAYS:-14}
+FORCE=false
+DRY_RUN=true
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --force)
+            FORCE=true
+            DRY_RUN=false
+            shift
+            ;;
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --days)
+            DAYS="$2"
+            shift 2
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
+echo "🧹 Git Branch Cleanup"
+echo "===================="
+
+# Remove merged branches
+echo ""
+echo "Merged branches (will be deleted):"
+git branch --merged | grep -v '^\*' | grep -v 'main\|master\|develop' || echo "  None found"
+
+if [ "$DRY_RUN" = true ]; then
+    echo ""
+    echo "To actually delete merged branches, run: git-cleanup --force"
+else
+    git branch --merged | grep -v '^\*' | grep -v 'main\|master\|develop' | xargs -r git branch -d
+    echo "✅ Merged branches deleted"
+fi
+
+# Remove stale branches (older than N days)
+echo ""
+echo "Stale branches (older than $DAYS days):"
+git branch -v | awk -v days="$DAYS" '
+    $3 ~ /^\[gone\]/ { print $1 }
+' || echo "  None found"
+
+if [ "$DRY_RUN" = false ] && git branch -v | grep -q '\[gone\]'; then
+    git fetch --prune
+    git branch -vv | grep '\[gone\]' | awk '{print $1}' | xargs -r git branch -D
+    echo "✅ Stale branches deleted"
+fi
+
+# Show remaining branches
+echo ""
+echo "Remaining branches:"
+git branch -v | head -10
+
+if [ "$DRY_RUN" = true ]; then
+    echo ""
+    echo "ℹ️  Dry run mode. No branches deleted."
+fi

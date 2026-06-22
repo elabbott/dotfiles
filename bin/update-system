@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# update-system: Update system packages and tools
+# Usage: update-system [--brew] [--npm] [--pip] [--all]
+
+BREW=false
+NPM=false
+PIP=false
+ALL=false
+
+# Parse arguments
+if [[ $# -eq 0 ]]; then
+    ALL=true
+else
+    case $1 in
+        --all)
+            ALL=true
+            ;;
+        --brew)
+            BREW=true
+            ;;
+        --npm)
+            NPM=true
+            ;;
+        --pip)
+            PIP=true
+            ;;
+    esac
+fi
+
+echo "🔄 System Update"
+echo "================"
+echo ""
+
+if [ "$BREW" = true ] || [ "$ALL" = true ]; then
+    if command -v brew &> /dev/null; then
+        echo "Updating Homebrew..."
+        brew update
+        echo "Upgrading Homebrew packages..."
+        brew upgrade
+        echo "Cleaning up..."
+        brew cleanup
+        echo "✅ Homebrew updated"
+    else
+        echo "⚠️  Homebrew not installed"
+    fi
+    echo ""
+fi
+
+if [ "$NPM" = true ] || [ "$ALL" = true ]; then
+    if command -v npm &> /dev/null; then
+        echo "Updating npm..."
+        npm install -g npm@latest
+        echo "Updating global packages..."
+        npm update -g
+        echo "✅ npm updated"
+    else
+        echo "⚠️  npm not installed"
+    fi
+    echo ""
+fi
+
+if [ "$PIP" = true ] || [ "$ALL" = true ]; then
+    if command -v pip3 &> /dev/null; then
+        echo "Upgrading pip..."
+        pip3 install --upgrade pip
+        echo "✅ pip updated"
+    else
+        echo "⚠️  pip not installed"
+    fi
+    echo ""
+fi
+
+echo "✨ System update complete"

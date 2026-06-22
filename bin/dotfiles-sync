@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# dotfiles-sync: Sync and update dotfiles
+# Usage: dotfiles-sync [--install] [--update] [--check]
+
+set -e
+
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+UPDATE=false
+INSTALL=false
+CHECK=false
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --update)
+            UPDATE=true
+            shift
+            ;;
+        --install)
+            INSTALL=true
+            shift
+            ;;
+        --check)
+            CHECK=true
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
+# Default to update if no args
+if [ "$UPDATE" = false ] && [ "$INSTALL" = false ] && [ "$CHECK" = false ]; then
+    UPDATE=true
+fi
+
+echo "🔄 Dotfiles Sync"
+echo "================"
+
+# Check if dotfiles dir exists
+if [ ! -d "$DOTFILES_DIR" ]; then
+    echo "❌ Dotfiles directory not found: $DOTFILES_DIR"
+    echo "Clone with: git clone https://github.com/elabbott/dotfiles.git ~/.dotfiles"
+    exit 1
+fi
+
+cd "$DOTFILES_DIR"
+
+if [ "$CHECK" = true ]; then
+    echo ""
+    echo "Checking git status..."
+    git status --short
+    echo ""
+    echo "Latest commits:"
+    git log --oneline -5
+fi
+
+if [ "$UPDATE" = true ]; then
+    echo ""
+    echo "Pulling latest changes..."
+    git pull origin main
+    echo "✅ Dotfiles updated"
+fi
+
+if [ "$INSTALL" = true ]; then
+    echo ""
+    echo "Running installation script..."
+    bash scripts/install.sh --skip-packages
+    echo "✅ Dotfiles installed"
+fi
+
+echo ""
+echo "Dotfiles location: $DOTFILES_DIR"

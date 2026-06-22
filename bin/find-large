@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# find-large: Find large files in current directory
+# Usage: find-large [size] [path]
+# Examples:
+#   find-large 100M           # Find files larger than 100MB in current directory
+#   find-large 10M /path/to   # Find files larger than 10MB in /path/to
+
+SIZE="${1:-100M}"
+PATH="${2:-.}"
+
+echo "🔍 Finding files larger than $SIZE in $PATH"
+echo ""
+
+if command -v du &> /dev/null; then
+    find "$PATH" -type f -size +"$SIZE" -exec du -h {} + | sort -rh | awk '{print $2, $1}' | column -t
+else
+    find "$PATH" -type f -size +"$SIZE" | xargs ls -lhS
+fi

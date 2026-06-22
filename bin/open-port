@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# open-port: Find what's running on a port
+# Usage: open-port [port]
+# Examples:
+#   open-port 3000
+#   open-port 8080
+
+PORT="${1:-3000}"
+
+echo "🔍 Checking port $PORT..."
+echo ""
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    if command -v lsof &> /dev/null; then
+        lsof -i ":$PORT" -n -P
+    else
+        echo "lsof command not found. Install with: brew install lsof"
+        exit 1
+    fi
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    if command -v ss &> /dev/null; then
+        ss -tlnp | grep ":$PORT"
+    elif command -v netstat &> /dev/null; then
+        netstat -tlnp | grep ":$PORT"
+    else
+        echo "ss or netstat command not found"
+        exit 1
+    fi
+else
+    echo "Unsupported OS: $OSTYPE"
+    exit 1
+fi

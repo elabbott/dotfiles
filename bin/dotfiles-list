@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# dotfiles-list: List all available dotfiles and their status
+# Usage: dotfiles-list
+
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
+if [ ! -d "$DOTFILES_DIR" ]; then
+    echo "❌ Dotfiles directory not found: $DOTFILES_DIR"
+    exit 1
+fi
+
+echo "📋 Dotfiles Inventory"
+echo "===================="
+echo ""
+
+# Check shell configs
+echo "Shell Configurations:"
+for file in .zshrc .bashrc; do
+    if [ -f "$DOTFILES_DIR/shell/$file" ]; then
+        if [ -L "$HOME/$file" ]; then
+            echo "  ✅ $file (linked)"
+        else
+            echo "  ⚠️  $file (not linked)"
+        fi
+    fi
+done
+
+echo ""
+echo "Git Configuration:"
+if [ -f "$DOTFILES_DIR/git/config" ]; then
+    if [ -L "$HOME/.config/git/config" ]; then
+        echo "  ✅ git/config (linked)"
+    else
+        echo "  ⚠️  git/config (not linked)"
+    fi
+fi
+
+echo ""
+echo "Editor Configurations:"
+configs=(
+    "vim/.vimrc:$HOME/.vimrc"
+    "nvim/init.lua:$HOME/.config/nvim/init.lua"
+    "vscode/settings.json:$HOME/Library/Application Support/Code/User/settings.json"
+)
+
+for config in "${configs[@]}"; do
+    src="${config%%:*}"
+    dest="${config##*:}"
+    if [ -f "$DOTFILES_DIR/editor/$src" ]; then
+        if [ -L "$dest" ]; then
+            echo "  ✅ editor/$src (linked)"
+        else
+            echo "  ⚠️  editor/$src (available, not linked)"
+        fi
+    fi
+done
+
+echo ""
+echo "Tool Configurations:"
+tools=(
+    "python/pyproject.toml"
+    "javascript/.eslintrc.json"
+    "typescript/tsconfig.json"
+)
+
+for tool in "${tools[@]}"; do
+    if [ -f "$DOTFILES_DIR/editor/$tool" ]; then
+        echo "  📦 editor/$tool"
+    fi
+done
+
+echo ""
+echo "Scripts and Utilities:"
+if [ -d "$DOTFILES_DIR/bin" ]; then
+    # Count all script files (excluding README)
+    script_count=$(find "$DOTFILES_DIR/bin" -type f -not -name "README*" 2>/dev/null | wc -l)
+    echo "  📁 $script_count utility scripts available"
+fi
+
+echo ""
+echo "Dotfiles location: $DOTFILES_DIR"
+echo "To update: dotfiles-sync --update"
+echo "To install: dotfiles-sync --install"
