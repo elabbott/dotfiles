@@ -2,21 +2,67 @@
 
 Custom shell scripts, utilities, and tools for common developer tasks.
 
-## Usage
+## Quick Setup
 
-Add this directory to your PATH to use scripts from anywhere:
+### Automatic PATH Setup
+
+Use `setup-path` to automatically add scripts to your shell configuration:
 
 ```bash
+./setup-path                    # Auto-detect your shell (zsh, bash, fish)
+./setup-path --zsh              # Add to zsh only
+./setup-path --all              # Add to zsh, bash, and fish
+./setup-path --dry-run          # Preview changes without applying them
+```
+
+After running, reload your shell:
+```bash
+source ~/.zshrc    # or ~/.bashrc / ~/.config/fish/config.fish
+```
+
+### Manual PATH Setup
+
+Add this directory to your PATH manually:
+
+```bash
+# For zsh (add to ~/.zshrc)
 export PATH="$HOME/.dotfiles/bin:$PATH"
+
+# For bash (add to ~/.bashrc)
+export PATH="$HOME/.dotfiles/bin:$PATH"
+
+# For fish (add to ~/.config/fish/config.fish)
+set -gx PATH ~/.dotfiles/bin $PATH
 ```
 
 Or symlink individual scripts to `~/bin/` or `/usr/local/bin/`:
 
 ```bash
-ln -s ~/.dotfiles/bin/git-cleanup ~/bin/git-cleanup
+ln -s ~/.dotfiles/bin/* ~/bin/
 ```
 
 ## Available Scripts
+
+### Setup Utilities
+
+#### `setup-path`
+Add dotfiles/bin directory to your shell PATH automatically.
+
+```bash
+setup-path                    # Auto-detect current shell
+setup-path --zsh              # Setup zsh only
+setup-path --bash             # Setup bash only
+setup-path --fish             # Setup fish only
+setup-path --all              # Setup all three shells
+setup-path --dry-run          # Preview changes first
+```
+
+Features:
+- Auto-detects your current shell
+- Adds PATH to shell configuration files
+- Creates shell config files if they don't exist
+- Dry-run mode for safety
+- Support for zsh, bash, and fish
 
 ### Git Utilities
 
