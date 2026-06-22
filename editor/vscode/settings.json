@@ -1,0 +1,102 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontSize": 13,
+  "editor.fontFamily": "'Monaco', 'Inconsolata', 'Fira Code', monospace",
+  "editor.lineHeight": 1.6,
+  "editor.rulers": [80, 120],
+  "editor.wordWrap": "on",
+  "editor.trimAutoWhitespace": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": true,
+  "editor.renderWhitespace": "selection",
+  "editor.cursorStyle": "line",
+  "editor.cursorBlinking": "blink",
+  "editor.minimap.enabled": true,
+  "editor.smoothScrolling": true,
+  "editor.suggest.localityBonus": true,
+  "editor.suggest.shareTypeScriptAndJavaScriptCompletions": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": true
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": false,
+    "**/.venv": true,
+    "**/__pycache__": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.venv": true,
+    "**/__pycache__": true,
+    ".git": true
+  },
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.ignoreLimitWarning": true,
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontFamily": "'Monaco', 'Inconsolata', 'Fira Code', monospace",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "/bin/zsh",
+      "args": ["-l"]
+    }
+  },
+  "workbench.activityBar.location": "side",
+  "workbench.sideBar.location": "left",
+  "workbench.editor.showTabs": true,
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.iconTheme": "vs-seti",
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
+  "extensions.recommendations": true,
+  "extensions.ignoreRecommendations": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true
+  },
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  "eslint.format.enable": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "shellformat.path": "shfmt",
+  "shellformat.flag": "-i 2"
+}

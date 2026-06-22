@@ -1,0 +1,90 @@
+[
+  {
+    "key": "cmd+shift+p",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "cmd+p",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "cmd+p",
+    "command": "workbench.action.quickOpenPreviousEditor"
+  },
+  {
+    "key": "cmd+tab",
+    "command": "-workbench.action.quickOpenPreviousEditor"
+  },
+  {
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.terminal.new"
+  },
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "cmd+b",
+    "command": "-workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "cmd+j",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "cmd+shift+j",
+    "command": "-workbench.action.togglePanel"
+  },
+  {
+    "key": "cmd+k cmd+0",
+    "command": "workbench.action.foldAllExcept"
+  },
+  {
+    "key": "cmd+1",
+    "command": "workbench.action.focusFirstEditorGroup"
+  },
+  {
+    "key": "cmd+2",
+    "command": "workbench.action.focusSecondEditorGroup"
+  },
+  {
+    "key": "cmd+3",
+    "command": "workbench.action.focusThirdEditorGroup"
+  },
+  {
+    "key": "cmd+shift+l",
+    "command": "workbench.action.showAllSymbols"
+  },
+  {
+    "key": "cmd+t",
+    "command": "-workbench.action.showAllSymbols"
+  },
+  {
+    "key": "cmd+shift+.",
+    "command": "workbench.action.focusSideBar"
+  },
+  {
+    "key": "cmd+0",
+    "command": "-workbench.action.focusSideBar"
+  },
+  {
+    "key": "shift+alt+up",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+up",
+    "command": "-editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+down",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+down",
+    "command": "-editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  }
+]
