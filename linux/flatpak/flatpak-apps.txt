@@ -1,0 +1,80 @@
+# Recommended Flatpak Applications
+# One application ID per line, comments start with #
+# Find more apps at https://flathub.org/
+
+# Essentials
+com.github.tchx84.Flatseal                  # Permission manager for Flatpak
+
+# Development & Editors
+com.visualstudio.code                       # VS Code editor
+org.gnome.gedit                             # GNOME Text Editor
+com.sublimetext.three                       # Sublime Text 3
+org.vim.gvim                                # GVim editor
+
+# Terminal & Shell
+com.github.MuhammedKalkan.ApplicationLauncher # Application launcher
+org.wezfurlong.wezterm                      # Wez's Terminal Emulator
+io.github.liferooter.Pithesaurz             # Alternative terminal
+
+# Version Control
+com.github.gittyup                          # Git GUI client
+org.gnome.gitg                              # GNOME Git client
+
+# Browsers & Internet
+org.mozilla.firefox                         # Firefox browser
+com.google.Chrome                           # Google Chrome
+com.brave.Browser                           # Brave browser
+org.thunderbird.Thunderbird                 # Email client
+
+# Communication
+com.slack.Slack                             # Slack messenger
+com.microsoft.Teams                         # Microsoft Teams
+io.github.Hexchat.Hexchat                   # IRC client
+
+# Productivity & Office
+org.libreoffice.LibreOffice                 # LibreOffice suite
+org.gnome.Calendar                          # GNOME Calendar
+org.gnome.Notes                             # GNOME Notes
+org.gnome.Evolution                         # Email and calendar
+
+# Media & Graphics
+com.github.PintaProject.Pinta               # Simple image editor
+org.gnome.Photos                            # GNOME Photos
+org.gnome.Totem                             # GNOME Videos
+io.mpv.Mpv                                  # MPV media player
+com.github.iwalton3.jellyfin-media-player   # Jellyfin media player
+
+# Utilities
+org.gnome.FileManager                       # GNOME Files
+com.github.sharkdp.bat                      # Cat clone with syntax highlighting
+io.github.sharkdp.fd                        # Fast find alternative
+org.gnome.Calculator                        # GNOME Calculator
+com.github.unrud.RemindersGnome             # Reminders application
+io.github.Cogitator.gImageReader            # Image to text converter
+
+# Development Tools
+org.docker.podman                           # Container management
+io.podman_desktop.PodmanDesktop             # Podman Desktop GUI
+org.postmanlabs.Postman                     # API testing tool
+io.dbeaver.DBeaverCommunity                 # Database management tool
+com.getpostman.Postman                      # Postman for API development
+
+# Database
+io.github.jeromegn.DatabaseClientForSQLite # SQLite client
+
+# 3D & CAD
+org.freecadweb.FreeCAD                      # 3D CAD/BIM design
+
+# Gaming
+com.github.Rosalie241.RMG                   # Retro games launcher
+com.github.Audacity.Audacity                # Audio editor
+org.blender.Blender                         # 3D modeling
+
+# System Tools
+org.gnome.Disks                             # Disk management utility
+com.github.tchx84.Flatseal                  # Flatpak permissions manager
+org.gnome.SystemMonitor                     # System monitor
+com.github.sierrabravo.open-port            # Port opener utility
+
+# Add your favorite apps here!
+# Search for apps at https://flathub.org/ and add their app IDs
