@@ -73,69 +73,86 @@ SHELL_NAME=$(detect_shell)
 log_info "Detected OS: $OS"
 log_info "Shell: $SHELL_NAME"
 
-# Install packages based on OS
-if [[ "$SKIP_PACKAGES" == "false" ]]; then
-    log_header "📦 Installing Packages"
+# Special handling for Windows
+if [[ "$OS" == "wsl2" || "$OS" == "windows" ]]; then
+    if [[ "$OS" == "wsl2" ]]; then
+        log_info "Windows 11 Setup Method: WSL2 (Windows Subsystem for Linux 2)"
+        log_header "🪟 Delegating to Windows WSL2 Setup Script"
+        bash "${SCRIPT_DIR}/setup-windows-wsl2.sh" $@
+        exit $?
+    else
+        log_info "Windows 11 Setup Method: Git Bash"
+        log_header "🪟 Delegating to Windows Git Bash Setup Script"
+        bash "${SCRIPT_DIR}/setup-windows-git-bash.sh" $@
+        exit $?
+    fi
+fi
 
-    case "$OS" in
-        macos)
-            if command -v brew &> /dev/null; then
-                log_info "Homebrew found"
-                if [[ -f "${DOTFILES_DIR}/macos/homebrew.txt" ]]; then
-                    log_info "Installing Homebrew packages..."
-                    if [[ "$DRY_RUN" != "true" ]]; then
-                        while IFS= read -r package; do
-                            [[ -z "$package" || "$package" =~ ^# ]] && continue
-                            log_info "  - $package"
-                            brew install "$package" 2>/dev/null || log_warn "    Failed to install $package"
-                        done < "${DOTFILES_DIR}/macos/homebrew.txt"
+# Install packages based on OS (skip for Windows - delegated to specific scripts)
+if [[ "$OS" != "wsl2" && "$OS" != "windows" ]]; then
+    if [[ "$SKIP_PACKAGES" == "false" ]]; then
+        log_header "📦 Installing Packages"
+
+        case "$OS" in
+            macos)
+                if command -v brew &> /dev/null; then
+                    log_info "Homebrew found"
+                    if [[ -f "${DOTFILES_DIR}/macos/homebrew.txt" ]]; then
+                        log_info "Installing Homebrew packages..."
+                        if [[ "$DRY_RUN" != "true" ]]; then
+                            while IFS= read -r package; do
+                                [[ -z "$package" || "$package" =~ ^# ]] && continue
+                                log_info "  - $package"
+                                brew install "$package" 2>/dev/null || log_warn "    Failed to install $package"
+                            done < "${DOTFILES_DIR}/macos/homebrew.txt"
+                        fi
                     fi
+                else
+                    log_warn "Homebrew not found. Install from https://brew.sh"
                 fi
-            else
-                log_warn "Homebrew not found. Install from https://brew.sh"
-            fi
-            ;;
-        linux)
-            DISTRO=$(detect_linux_distro)
-            log_info "Detected Linux distro: $DISTRO"
+                ;;
+            linux)
+                DISTRO=$(detect_linux_distro)
+                log_info "Detected Linux distro: $DISTRO"
 
-            case "$DISTRO" in
-                debian)
-                    if [[ -f "${DOTFILES_DIR}/linux/apt-packages.txt" ]]; then
-                        log_info "Installing apt packages..."
-                        if [[ "$DRY_RUN" != "true" ]]; then
-                            sudo apt-get update
-                            while IFS= read -r package; do
-                                [[ -z "$package" || "$package" =~ ^# ]] && continue
-                                log_info "  - $package"
-                                sudo apt-get install -y "$package" || log_warn "    Failed to install $package"
-                            done < "${DOTFILES_DIR}/linux/apt-packages.txt"
+                case "$DISTRO" in
+                    debian)
+                        if [[ -f "${DOTFILES_DIR}/linux/apt-packages.txt" ]]; then
+                            log_info "Installing apt packages..."
+                            if [[ "$DRY_RUN" != "true" ]]; then
+                                sudo apt-get update
+                                while IFS= read -r package; do
+                                    [[ -z "$package" || "$package" =~ ^# ]] && continue
+                                    log_info "  - $package"
+                                    sudo apt-get install -y "$package" || log_warn "    Failed to install $package"
+                                done < "${DOTFILES_DIR}/linux/apt-packages.txt"
+                            fi
                         fi
-                    fi
-                    ;;
-                rhel)
-                    if [[ -f "${DOTFILES_DIR}/linux/yum-packages.txt" ]]; then
-                        log_info "Installing yum packages..."
-                        if [[ "$DRY_RUN" != "true" ]]; then
-                            while IFS= read -r package; do
-                                [[ -z "$package" || "$package" =~ ^# ]] && continue
-                                log_info "  - $package"
-                                sudo yum install -y "$package" || log_warn "    Failed to install $package"
-                            done < "${DOTFILES_DIR}/linux/yum-packages.txt"
+                        ;;
+                    rhel)
+                        if [[ -f "${DOTFILES_DIR}/linux/yum-packages.txt" ]]; then
+                            log_info "Installing yum packages..."
+                            if [[ "$DRY_RUN" != "true" ]]; then
+                                while IFS= read -r package; do
+                                    [[ -z "$package" || "$package" =~ ^# ]] && continue
+                                    log_info "  - $package"
+                                    sudo yum install -y "$package" || log_warn "    Failed to install $package"
+                                done < "${DOTFILES_DIR}/linux/yum-packages.txt"
+                            fi
                         fi
-                    fi
-                    ;;
-            esac
-            ;;
-        codespaces)
-            log_info "Running in GitHub Codespaces"
-            ;;
-        *)
-            log_warn "Unknown OS: $OS"
-            ;;
-    esac
-else
-    log_info "Skipping package installation"
+                        ;;
+                esac
+                ;;
+            codespaces)
+                log_info "Running in GitHub Codespaces"
+                ;;
+            *)
+                log_warn "Unknown OS: $OS"
+                ;;
+        esac
+    else
+        log_info "Skipping package installation"
+    fi
 fi
 
 # Link dotfiles

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Create symlinks for dotfiles in home directory
+# Supports macOS, Linux, WSL2, and provides alternatives for Git Bash
 
 set -e
 
@@ -23,6 +24,20 @@ log_warn() {
 log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
+
+# Detect environment for symlink handling
+detect_link_environment() {
+    if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+        echo "git-bash"
+    elif grep -qi microsoft /proc/version 2>/dev/null || grep -qi "wsl" /proc/version 2>/dev/null; then
+        echo "wsl2"
+    else
+        echo "unix"
+    fi
+}
+
+LINK_ENV=$(detect_link_environment)
+log_info "Link environment: $LINK_ENV"
 
 link_file() {
     local src="$1"
@@ -67,13 +82,37 @@ fi
 # Git configuration
 if [[ -f "${DOTFILES_DIR}/git/config" ]]; then
     mkdir -p "$HOME/.config/git"
-    link_file "${DOTFILES_DIR}/git/config" "$HOME/.config/git/config"
+    if [[ "$LINK_ENV" == "git-bash" ]]; then
+        # Git Bash has limited symlink support, use copy instead
+        if [[ "$DRY_RUN" == "true" ]]; then
+            log_info "[DRY RUN] Would copy (not link) git config for Git Bash compatibility"
+        else
+            cp "${DOTFILES_DIR}/git/config" "$HOME/.config/git/config"
+            log_info "Copied (not linked) git config for Git Bash compatibility"
+        fi
+    else
+        link_file "${DOTFILES_DIR}/git/config" "$HOME/.config/git/config"
+    fi
 fi
 
 if [[ -f "${DOTFILES_DIR}/git/ignore" ]]; then
-    link_file "${DOTFILES_DIR}/git/ignore" "$HOME/.gitignore_global"
+    if [[ "$LINK_ENV" == "git-bash" ]]; then
+        # Git Bash has limited symlink support, use copy instead
+        if [[ "$DRY_RUN" == "true" ]]; then
+            log_info "[DRY RUN] Would copy (not link) git ignore for Git Bash compatibility"
+        else
+            cp "${DOTFILES_DIR}/git/ignore" "$HOME/.gitignore_global"
+            log_info "Copied (not linked) git ignore for Git Bash compatibility"
+        fi
+    else
+        link_file "${DOTFILES_DIR}/git/ignore" "$HOME/.gitignore_global"
+    fi
 fi
 
 # Add more linking rules as dotfiles are created
+
+if [[ "$LINK_ENV" == "git-bash" ]]; then
+    log_warn "Running in Git Bash: Some symlinks were copied instead due to Windows limitations"
+fi
 
 log_info "Dotfiles linked successfully!"
