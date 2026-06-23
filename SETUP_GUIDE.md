@@ -9,6 +9,7 @@ A comprehensive step-by-step guide to install and configure your development env
   - [Quick Start (Recommended)](#quick-start-recommended)
   - [Manual Setup](#manual-setup)
   - [GitHub Codespaces](#github-codespaces)
+  - [Windows 11](#windows-11)
 - [Post-Installation Setup](#post-installation-setup)
 - [Verifying Installation](#verifying-installation)
 - [Troubleshooting](#troubleshooting)
@@ -27,13 +28,20 @@ Before you begin, ensure you have:
    - **macOS**: `brew install git`
    - **Linux (Ubuntu/Debian)**: `sudo apt-get install git`
    - **Linux (RHEL/CentOS)**: `sudo yum install git`
+   - **Windows 11**: Install [Git for Windows](https://git-scm.com/download/win) or enable WSL2
 
 2. **A supported shell**:
    - Zsh (preferred for macOS)
-   - Bash (compatible with all systems)
+   - Bash (compatible with all systems, required for Windows)
    - Fish (supported for PATH setup)
+   - **Windows 11**: Use WSL2 for Zsh/Bash, or Git Bash
 
 3. **Administrator/sudo access** (required for system package installation)
+
+4. **For Windows 11**: One of:
+   - WSL2 enabled (recommended)
+   - Git Bash installed
+   - Chocolatey or Scoop package manager
 
 ---
 
@@ -329,6 +337,231 @@ bash ./codespaces/init.sh
 
 ---
 
+### Windows 11
+
+**Duration**: 10-15 minutes
+
+Windows 11 requires special setup due to its different architecture. We recommend using WSL2 (Windows Subsystem for Linux) for the best experience, but direct Windows setup is also possible.
+
+#### Option 1: Recommended - WSL2 Setup
+
+WSL2 provides a full Linux environment within Windows, making this repository work seamlessly.
+
+##### Step 1: Enable WSL2
+
+1. **Open PowerShell as Administrator** (Win+X, then A)
+
+2. **Enable WSL and Windows Virtualization**:
+   ```powershell
+   wsl --install
+   ```
+
+   **What this does:**
+   - Enables Windows Subsystem for Linux
+   - Downloads Ubuntu LTS by default
+   - Enables required Windows features
+   - May require a restart
+
+3. **After restart, set WSL default to version 2**:
+   ```powershell
+   wsl --set-default-version 2
+   ```
+
+4. **Install a Linux distribution** (if not done automatically):
+   ```powershell
+   wsl --list --online              # See available distributions
+   wsl --install -d Ubuntu-22.04    # Install specific version
+   ```
+
+**Why WSL2?**
+- Full Linux kernel support
+- Native bash/zsh/fish shells
+- Seamless file system access
+- Docker integration
+- Repository works exactly as documented
+- Better performance than WSL1
+
+##### Step 2: Open WSL Terminal
+
+1. **Open Windows Terminal** (search in Start menu) or press `Win+X` then select "Terminal"
+2. **Click dropdown arrow** → Select your Linux distribution (Ubuntu, Debian, etc.)
+3. **You're now in a Linux terminal**
+
+All remaining steps are identical to Linux installation:
+
+```bash
+# In WSL2 terminal
+git clone https://github.com/elabbott/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./scripts/install.sh --dry-run
+./scripts/install.sh
+```
+
+##### Step 3: Configure Windows Terminal (Optional)
+
+For a better experience, customize Windows Terminal settings:
+
+1. **Open Windows Terminal**
+2. **Click Settings** (Ctrl+,)
+3. **Recommended settings**:
+   ```json
+   {
+     "defaultProfile": "Ubuntu",
+     "confirmCloseAllTabs": false,
+     "copyOnSelect": true,
+     "fontSize": 10,
+     "fontFace": "Cascadia Code"
+   }
+   ```
+
+4. **Set Ubuntu as default shell**:
+   - Go to Settings → Defaults
+   - Select your distribution under "Default profile"
+
+**Why customize?**
+- Makes terminal more productive
+- Better integration with dotfiles
+- Improved copy/paste experience
+- Consistent with Linux terminal behavior
+
+---
+
+#### Option 2: Direct Windows Setup (Git Bash)
+
+For Windows-only setup without virtualization (more limited functionality).
+
+##### Step 1: Install Git for Windows
+
+1. **Download from**: https://git-scm.com/download/win
+2. **Run installer** with default options
+3. **During installation**, ensure:
+   - "Git Bash Here" is selected
+   - "Add Git to PATH" is selected
+   - Line ending conversion is "Checkout as-is, commit as-is"
+
+##### Step 2: Install Node.js and npm (if needed)
+
+```powershell
+# Using Chocolatey (if installed)
+choco install nodejs
+
+# Or download from https://nodejs.org/
+```
+
+##### Step 3: Clone the Repository
+
+1. **Open Git Bash** (right-click → "Git Bash Here" or search for "Git Bash")
+2. **Navigate to home directory**:
+   ```bash
+   cd ~
+   ```
+
+3. **Clone the repository**:
+   ```bash
+   git clone https://github.com/elabbott/dotfiles.git .dotfiles
+   cd .dotfiles
+   ```
+
+**Note**: Use `.dotfiles` (Windows style) instead of `~/.dotfiles`
+
+##### Step 4: Manual Setup (Script won't work on Windows)
+
+The installation script doesn't support Windows directly. Set up manually:
+
+```bash
+# In Git Bash
+
+# Add bin directory to PATH
+echo 'export PATH="$HOME/.dotfiles/bin:$PATH"' >> ~/.bashrc
+
+# Source shell configuration
+echo 'source ~/.dotfiles/shell/aliases.sh' >> ~/.bashrc
+echo 'source ~/.dotfiles/shell/exports.sh' >> ~/.bashrc
+echo 'source ~/.dotfiles/shell/functions.sh' >> ~/.bashrc
+
+# Reload shell
+source ~/.bashrc
+```
+
+##### Step 5: Create Symlinks (Manual)
+
+```bash
+# Shell aliases and functions
+ln -s ~/.dotfiles/shell/aliases.sh ~/.bash_aliases
+ln -s ~/.dotfiles/shell/functions.sh ~/.bash_functions
+
+# Git configuration
+mkdir -p ~/.config/git
+ln -s ~/.dotfiles/git/config ~/.config/git/config
+
+# VSCode configuration (Windows path)
+mkdir -p ~/AppData/Roaming/Code/User
+ln -s ~/.dotfiles/editor/vscode/settings.json ~/AppData/Roaming/Code/User/settings.json
+```
+
+**Limitations of Git Bash:**
+- Some shell features may not work
+- Path handling is different
+- No access to WSL2 performance benefits
+- Limited scripting capabilities
+- Some tools may not be available
+
+---
+
+#### Option 3: Using Package Managers
+
+Alternatively, use Chocolatey or Scoop to install development tools.
+
+##### Using Chocolatey
+
+1. **Install Chocolatey** (if not already installed):
+   ```powershell
+   # Run PowerShell as Administrator
+   Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+   ```
+
+2. **Install tools**:
+   ```powershell
+   choco install git vim nodejs python3
+   ```
+
+3. **Then follow Git Bash setup above**
+
+##### Using Scoop
+
+1. **Install Scoop** (if not already installed):
+   ```powershell
+   # Run PowerShell
+   iwr -useb get.scoop.sh | iex
+   ```
+
+2. **Install tools**:
+   ```powershell
+   scoop install git vim nodejs python3
+   ```
+
+3. **Then follow Git Bash setup above**
+
+**Chocolatey vs Scoop:**
+- Chocolatey: Larger package selection, system-wide
+- Scoop: Lighter weight, user-only installation
+
+---
+
+## Recommendation for Windows 11
+
+| Scenario | Recommendation | Why |
+|----------|---|---|
+| **Development work** | WSL2 | Full Linux environment, works as documented |
+| **Full compatibility** | WSL2 | All scripts and tools work perfectly |
+| **Simple setup** | WSL2 | Faster than alternatives, modern approach |
+| **No virtualization** | Git Bash | Works without Hyper-V, but limited features |
+| **Quick start** | WSL2 | Most popular modern approach |
+
+**Our recommendation**: Use WSL2. It provides the best experience and makes your Windows setup identical to Linux/macOS.
+
+---
+
 ## Post-Installation Setup
 
 After running the installation script, complete these optional but recommended steps:
@@ -617,6 +850,77 @@ git config --global core.excludesfile ~/.gitignore_global
 - Symlink path incorrect
 - Git version difference
 
+### Windows 11 Specific Issues
+
+**Issue: WSL2 not working**
+
+**Error**: `The Windows Subsystem for Linux has not been installed` or `Invalid distribution`
+
+**Solution**:
+```powershell
+# Check if WSL2 is enabled
+wsl --status
+
+# If not, enable it
+wsl --install
+
+# Set WSL2 as default
+wsl --set-default-version 2
+
+# Install a distribution
+wsl --list --online
+wsl --install -d Ubuntu-22.04
+
+# Restart your computer
+```
+
+**Why this happens:**
+- Windows Subsystem for Linux not enabled
+- Virtualization not enabled in BIOS
+- Hyper-V not installed
+- Windows version too old (need 19041 or later)
+
+**Issue: Symlinks fail in WSL2**
+
+**Error**: `Read-only file system` or symlink creation fails
+
+**Solution**:
+```bash
+# Check file system type
+df -T
+
+# If using /mnt/, try copying to home directory instead
+cd ~
+git clone https://github.com/elabbott/dotfiles.git ~/.dotfiles
+
+# WSL home directory symlinks should work
+ln -s ~/.dotfiles/shell/aliases.sh ~/.bash_aliases
+```
+
+**Why this happens:**
+- Using /mnt/ (Windows file system) has limited symlink support
+- Need to use WSL2 home directory for full support
+
+**Issue: Git Bash scripts don't work**
+
+**Error**: Commands not found or path issues
+
+**Solution**:
+```bash
+# Git Bash uses Windows paths, add to path properly
+echo 'export PATH="$HOME/.dotfiles/bin:$PATH"' >> ~/.bashrc
+
+# Not all scripts work in Git Bash (Windows limitation)
+# Use WSL2 for full compatibility
+```
+
+**Why this happens:**
+- Git Bash is MSYS2-based, not full Linux
+- Some shell features don't translate
+- Path handling is fundamentally different
+
+---
+
 ### Still Having Issues?
 
 1. **Check the logs**: The installation script outputs detailed information
@@ -641,9 +945,21 @@ git config --global core.excludesfile ~/.gitignore_global
    bash ~/.dotfiles/scripts/detect-os.sh
    ```
 
-5. **Open an issue** on GitHub with:
-   - Your operating system (output of `uname -s`)
-   - Your shell (output of `echo $SHELL`)
+5. **For Windows 11 issues**:
+   ```powershell
+   # Check WSL2 status
+   wsl --status
+   
+   # List installed distributions
+   wsl --list --verbose
+   
+   # Check version
+   wsl --version
+   ```
+
+6. **Open an issue** on GitHub with:
+   - Your operating system (output of `uname -s` or `[System.Environment]::OSVersion` on Windows)
+   - Your shell (output of `echo $SHELL` or `$PROFILE` on Windows)
    - Error messages (full output preferred)
    - Steps to reproduce
 
@@ -666,20 +982,28 @@ After successful installation:
 
 ```bash
 # Installation
-./scripts/install.sh              # Full automated setup
+./scripts/install.sh              # Full automated setup (macOS/Linux/Codespaces)
 ./scripts/install.sh --dry-run    # Preview without changes
 ./scripts/install.sh --skip-packages # Link files only
 
-# Maintenance
+# Windows 11 (WSL2)
+# Same as Linux commands above
+
+# Windows 11 (Git Bash)
+cd ~/.dotfiles
+source ~/.bashrc                  # Reload configuration
+
+# Maintenance (all platforms)
 dotfiles-sync                     # Update dotfiles from GitHub
 git-cleanup --dry-run            # Preview branch cleanup
 git-cleanup --force              # Remove merged branches
 
 # Shell configuration
 setup-path                        # Add bin/ to PATH
-source ~/.zshrc                   # Reload shell config
+source ~/.zshrc                   # Reload shell config (macOS/Linux/WSL2)
+source ~/.bashrc                  # Reload shell config (Git Bash)
 
-# Verification
+# Verification (all platforms)
 echo $PATH                        # Check PATH includes ~/.dotfiles/bin
 which git-cleanup                 # Verify script is accessible
 git config --global user.name     # Check git identity
