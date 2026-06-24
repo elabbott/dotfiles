@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Kill and restart GPG Agent on macOS with cache clearing
+# Usage: gpg-agent-restart
+
+set -e
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${YELLOW}Stopping GPG Agent...${NC}"
+
+# Kill all gpg-agent processes
+pkill -9 gpg-agent 2>/dev/null || true
+
+echo -e "${YELLOW}Clearing GPG Agent cache and sockets...${NC}"
+
+# Remove stale socket files and cache
+rm -f ~/.gnupg/S.gpg-agent* 2>/dev/null || true
+
+echo -e "${YELLOW}Waiting for GPG Agent to stop...${NC}"
+sleep 1
+
+echo -e "${YELLOW}Starting GPG Agent...${NC}"
+
+# Start GPG Agent with proper socket setup
+if gpg-agent --daemon > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ GPG Agent daemon started${NC}"
+else
+    echo -e "${YELLOW}⚠ GPG Agent startup message (this is normal)${NC}"
+fi
+
+# Give it a moment to fully initialize
+sleep 0.5
+
+# Verify it's running
+if pgrep -x "gpg-agent" > /dev/null; then
+    echo -e "${GREEN}✓ GPG Agent restarted successfully${NC}"
+    echo -e "${GREEN}✓ Ready for passphrase entry${NC}"
+else
+    echo -e "${RED}✗ Failed to restart GPG Agent${NC}"
+    exit 1
+fi
