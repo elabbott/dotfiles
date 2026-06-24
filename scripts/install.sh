@@ -171,7 +171,7 @@ if [[ "$OS" != "wsl2" && "$OS" != "windows" ]]; then
                                     while IFS= read -r package; do
                                         [[ -z "$package" || "$package" =~ ^# ]] && continue
                                         log_info "  - $package (AUR)"
-                                        $AUR_HELPER -S --needed --noconfirm "$package" || log_warn "    Failed to install $package"
+                                        "$AUR_HELPER" -S --needed --noconfirm "$package" || log_warn "    Failed to install $package"
                                     done < "${DOTFILES_DIR}/linux/aur-packages.txt"
                                 fi
                             fi
