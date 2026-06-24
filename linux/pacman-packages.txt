@@ -1,0 +1,22 @@
+# Arch Linux packages (pacman)
+# One package per line, comments start with #
+
+# Base development tools
+base-devel
+git
+curl
+wget
+openssh
+tmux
+
+# Shells
+zsh
+bash
+
+# Development tools
+python-pip
+nodejs
+npm
+neovim
+
+# Add more as needed

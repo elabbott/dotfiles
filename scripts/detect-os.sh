@@ -45,6 +45,9 @@ detect_linux_distro() {
             rhel|centos|fedora)
                 echo "rhel"
                 ;;
+            arch|manjaro|endeavouros)
+                echo "arch"
+                ;;
             *)
                 echo "$ID"
                 ;;

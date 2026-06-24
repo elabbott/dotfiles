@@ -1,0 +1,21 @@
+# AUR (Arch User Repository) packages
+# One package per line, comments start with #
+# 
+# NOTE: These packages require an AUR helper like paru or yay
+# Install an AUR helper first:
+#   git clone https://aur.archlinux.org/paru.git
+#   cd paru && makepkg -si
+#
+# Or use yay:
+#   git clone https://aur.archlinux.org/yay.git
+#   cd yay && makepkg -si
+
+# Development tools
+visual-studio-code-bin
+google-chrome
+
+# Productivity
+spotify
+slack-desktop
+
+# Add more as needed
