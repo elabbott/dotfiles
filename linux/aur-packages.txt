@@ -12,7 +12,7 @@
 
 # Development tools
 visual-studio-code-bin
-google-chrome
+google-chrome-stable
 
 # Productivity
 spotify
