@@ -154,7 +154,7 @@ if [[ "$OS" != "wsl2" && "$OS" != "windows" ]]; then
                                 done < "${DOTFILES_DIR}/linux/pacman-packages.txt"
                             fi
                         fi
-                        
+
                         # Check for AUR helper and install AUR packages
                         if command -v paru &> /dev/null; then
                             AUR_HELPER="paru"
@@ -163,7 +163,7 @@ if [[ "$OS" != "wsl2" && "$OS" != "windows" ]]; then
                         else
                             AUR_HELPER=""
                         fi
-                        
+
                         if [[ -n "$AUR_HELPER" ]]; then
                             if [[ -f "${DOTFILES_DIR}/linux/aur-packages.txt" ]]; then
                                 log_info "Installing AUR packages using $AUR_HELPER..."
