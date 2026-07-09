@@ -60,6 +60,7 @@ macOS-specific setup:
 Linux distribution support:
 - Ubuntu/Debian packages (`apt`)
 - RHEL/CentOS packages (`yum`)
+- Arch Linux packages (`pacman` and AUR)
 - Distribution detection and automatic setup
 
 **Location:** [linux/](linux/) | **Learn more:** [linux/README.md](linux/README.md)
@@ -242,6 +243,8 @@ dotfiles/
 ├── linux/                   # Linux-specific configuration
 │   ├── apt-packages.txt     # Ubuntu/Debian packages
 │   ├── yum-packages.txt     # RHEL/CentOS packages
+│   ├── pacman-packages.txt  # Arch Linux packages
+│   ├── aur-packages.txt     # Arch User Repository packages
 │   └── README.md            # Linux guide
 │
 ├── codespaces/              # GitHub Codespaces configuration
@@ -482,6 +485,7 @@ Contributions are welcome! Ways to contribute:
 | **macOS** (10.15+) | ✅ Fully supported | Automatic with Homebrew |
 | **Ubuntu/Debian** | ✅ Fully supported | Automatic with apt |
 | **RHEL/CentOS/Fedora** | ✅ Fully supported | Automatic with yum |
+| **Arch Linux** | ✅ Fully supported | Automatic with pacman and AUR |
 | **GitHub Codespaces** | ✅ Fully supported | Automatic via devcontainer |
 
 ---

@@ -141,6 +141,45 @@ if [[ "$OS" != "wsl2" && "$OS" != "windows" ]]; then
                             fi
                         fi
                         ;;
+                    arch)
+                        if [[ -f "${DOTFILES_DIR}/linux/pacman-packages.txt" ]]; then
+                            log_info "Installing pacman packages..."
+                            if [[ "$DRY_RUN" != "true" ]]; then
+                                # Sync package database only, don't upgrade system
+                                sudo pacman -Sy --noconfirm
+                                while IFS= read -r package; do
+                                    [[ -z "$package" || "$package" =~ ^# ]] && continue
+                                    log_info "  - $package"
+                                    sudo pacman -S --needed --noconfirm "$package" || log_warn "    Failed to install $package"
+                                done < "${DOTFILES_DIR}/linux/pacman-packages.txt"
+                            fi
+                        fi
+
+                        # Check for AUR helper and install AUR packages
+                        if command -v paru &> /dev/null; then
+                            AUR_HELPER="paru"
+                        elif command -v yay &> /dev/null; then
+                            AUR_HELPER="yay"
+                        else
+                            AUR_HELPER=""
+                        fi
+
+                        if [[ -n "$AUR_HELPER" ]]; then
+                            if [[ -f "${DOTFILES_DIR}/linux/aur-packages.txt" ]]; then
+                                log_info "Installing AUR packages using $AUR_HELPER..."
+                                if [[ "$DRY_RUN" != "true" ]]; then
+                                    while IFS= read -r package; do
+                                        [[ -z "$package" || "$package" =~ ^# ]] && continue
+                                        log_info "  - $package (AUR)"
+                                        "$AUR_HELPER" -S --needed --noconfirm "$package" || log_warn "    Failed to install $package"
+                                    done < "${DOTFILES_DIR}/linux/aur-packages.txt"
+                                fi
+                            fi
+                        else
+                            log_warn "No AUR helper (paru/yay) found. Skipping AUR packages."
+                            log_info "Install an AUR helper to install AUR packages: https://wiki.archlinux.org/title/AUR_helpers"
+                        fi
+                        ;;
                 esac
                 ;;
             codespaces)
